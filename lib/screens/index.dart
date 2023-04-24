@@ -59,11 +59,11 @@ class _IndexState extends State<Index> {
           ),
           ElevatedButton(
             onPressed: () {
-              // Navigator.pop(context);
-              // Navigator.of(context).push(
-              //     MaterialPageRoute(
-              //       builder: (context) => const SignUp(),
-              //     ));
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const LogIn(),
+                  ));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.indigo[200],
