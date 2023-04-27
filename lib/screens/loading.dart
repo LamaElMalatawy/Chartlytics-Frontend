@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'summary_generation.dart';
 import 'package:lottie/lottie.dart';
 import 'classification.dart';
-import 'pick_image.dart';
 
 class loadingPage extends StatefulWidget {
   const loadingPage({super.key});
@@ -50,12 +49,9 @@ class loadingState  extends State<loadingPage>
     else
     {
       Navigator.pop(context);
-      Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const summaryPage(),
-          ));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const summaryPage()),);        // Navigator.pop(context);
+      setState(() {});
     }
-    // setState(() {});
   }
 
   @override
@@ -83,17 +79,14 @@ class loadingState  extends State<loadingPage>
         context: context,
         builder: (context) =>
             AlertDialog(
-              title: Text('Sorry !!'),
-              content: Text("Could not Summarise your Chart Image"),
+              title: const Text('Sorry :('),
+              content: const Text("Could not Summarise your Chart Image"),
               actions: [
                 TextButton(onPressed: () {
                   Navigator.pop(context); //poping the message
                   Navigator.pop(context); //poping the loading page
-                  Navigator.pop(
-                      context); // poping the previous main page where there's a chosen image
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const PickImage(),));
+                  Navigator.pop(context); // poping the previous main page where there's a chosen image
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const PickImage()),);        // Navigator.pop(context);
                 },
                     child: Text('Back'))
               ],

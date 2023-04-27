@@ -1,18 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pick_image/components/custom_textfield.dart';
 import 'package:pick_image/components/custom_button.dart';
 import 'package:pick_image/components/square_tile.dart';
 import 'package:pick_image/screens/login.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUp extends StatefulWidget {
-
   //final Function()? onTap;
-
   const SignUp({
-    super.key,
-    //required this.onTap,
-});
-
+  super.key,
+  //required this.onTap,
+  });
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -20,13 +20,73 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
 
   // text editing controllers
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  void save() async{
+    // Name, email address, and profile photo URL
+    final email = emailController.text;
+    await FirebaseFirestore.instance.collection('userImages').doc(email).set(
+        {
+          'first name':firstNameController.text.trim(),
+          'last name':lastNameController.text.trim(),
+        }
+    );
+  }
 
-  // TODO: Sign Up Method
-  bool SignUserUp(){
-    throw UnimplementedError('Sign Up Method is not implemented yet');
+  Future SignUserUp() async {
+    try{
+      if (!EmailValidator.validate(emailController.text))
+      {
+        showErrorMessage("Invalid Email", "Please make sure you enter a valid email format.");
+      }
+      else if (passwordController.text == "" || firstNameController.text == "" || firstNameController.text == "")
+      {
+        showErrorMessage("Invalid Password", "Please enter a valid password.");
+      }
+      else if (passwordController.text.length < 6)
+      {
+        showErrorMessage("Weak Password", "Please make sure your password contains 6 or more characters.");
+
+      }
+      else
+      {
+        if(passwordController.text == confirmPasswordController.text)
+        {
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim()
+          );
+        }
+        else
+          showErrorMessage("Passwords Don't Match", "Please make sure to confirm you password.");
+      }
+    }
+    on FirebaseAuthException catch(e)
+    {
+      if(e.code =="email-already-in-use")
+      {
+        showErrorMessage("Email address is already in use by another account", "Please enter another Email.");
+      }
+      else
+        showErrorMessage("Something is Wrong", e.code);
+    }
+    save();
+
+  }
+  void showErrorMessage(String message,String details){
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(message),
+          content: Text(details),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context), child: Text('OK'))
+          ],
+        )
+    );
   }
 
   @override
@@ -41,37 +101,49 @@ class _SignUpState extends State<SignUp> {
                 //logo
                 const Icon(
                   Icons.pie_chart_outline,
-                  size: 50,
+                  size: 100,
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 25,
                 ),
 
                 // welcome back
                 const Text('Let\'s create an account for you!',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: 16,
+                      fontFamily: 'Alata'
                   ),
                 ),
 
                 const SizedBox(
-                  height: 25,
+                  height: 20,
                 ),
-
+                CustomTextFieldWidget(
+                  controller: firstNameController,
+                  hintText: 'First Name',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10,),
+                CustomTextFieldWidget(
+                  controller: lastNameController,
+                  hintText: 'Last Name',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10,),
                 // email
                 CustomTextFieldWidget(
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(height: 10,),
                 // password
                 CustomTextFieldWidget(
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: true,
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(height: 10,),
                 // confirm password
                 CustomTextFieldWidget(
                   controller: confirmPasswordController,
@@ -85,7 +157,7 @@ class _SignUpState extends State<SignUp> {
                   onTap: SignUserUp,
                   label: 'Sign Up',
                 ),
-                const SizedBox(height: 50,),
+                const SizedBox(height: 20,),
                 // or continue with
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -101,7 +173,8 @@ class _SignUpState extends State<SignUp> {
                         child: Text(
                           'Or continue with',
                           style: TextStyle(
-                            color: Colors.grey[700],
+                              color: Colors.grey[700],
+                              fontFamily: 'Alata'
                           ),
                         ),
                       ),
@@ -112,7 +185,7 @@ class _SignUpState extends State<SignUp> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 40,),
+                const SizedBox(height: 10,),
 
                 // google & facebook sign up
                 Row(
@@ -123,7 +196,7 @@ class _SignUpState extends State<SignUp> {
                     SquareTileWidget(imgPath: 'assets/images/facebook.png'),
                   ],
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 15,),
 
                 // already have an account? login now
                 Row(
@@ -131,7 +204,8 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     Text('Already have an account?',
                       style: TextStyle(
-                        color: Colors.grey[700],
+                          color: Colors.grey[700],
+                          fontFamily: 'Alata'
                       ),),
                     const SizedBox(width: 4,),
                     GestureDetector(
@@ -146,8 +220,9 @@ class _SignUpState extends State<SignUp> {
                       child: const Text(
                         'Login Now',
                         style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
+                            color: Colors.indigo,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Alata'
                         ),
                       ),
                     )
