@@ -10,8 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class SignUp extends StatefulWidget {
   //final Function()? onTap;
   const SignUp({
-  super.key,
-  //required this.onTap,
+    super.key,
+    //required this.onTap,
   });
   @override
   _SignUpState createState() => _SignUpState();
@@ -99,8 +99,9 @@ class _SignUpState extends State<SignUp> {
               children: [
                 const SizedBox(height: 40,),
                 //logo
-                const Icon(
+                 Icon(
                   Icons.pie_chart_outline,
+                  color: Colors.deepPurple[400],
                   size: 100,
                 ),
                 const SizedBox(
@@ -111,7 +112,8 @@ class _SignUpState extends State<SignUp> {
                 const Text('Let\'s create an account for you!',
                   style: TextStyle(
                       fontSize: 16,
-                      fontFamily: 'Alata'
+                      fontFamily: 'Alata',
+                    fontWeight: FontWeight.bold
                   ),
                 ),
 
@@ -220,7 +222,7 @@ class _SignUpState extends State<SignUp> {
                       child: const Text(
                         'Login Now',
                         style: TextStyle(
-                            color: Colors.indigo,
+                            color: Colors.deepPurple,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Alata'
                         ),

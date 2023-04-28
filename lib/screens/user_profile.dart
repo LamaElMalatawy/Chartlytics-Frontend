@@ -21,9 +21,9 @@ class userPageState extends State<userPage> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 80,
+          toolbarHeight: 70,
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.indigo[200],
+          backgroundColor: Colors.deepPurple[100],
           title: const
           Center(
               child: Text('Chartlytics',
@@ -40,7 +40,7 @@ class userPageState extends State<userPage> {
                 Icon(
                   Icons.person_2,
                   size: 70,
-                  color: Colors.indigo[300],
+                  color: Colors.deepPurple[300],
                 ),
                 const SizedBox(
                   height: 10,
@@ -164,7 +164,7 @@ class userPageState extends State<userPage> {
               ));
             }
           },
-          backgroundColor: Colors.indigo[200],
+          backgroundColor: Colors.deepPurple[100],
           showSelectedLabels: false,
           showUnselectedLabels: false,
           items: const <BottomNavigationBarItem>[
@@ -181,7 +181,6 @@ class userPageState extends State<userPage> {
               label: "settings",
             ),
           ],
-
         ),
         ),
       ),

@@ -65,38 +65,16 @@ class PickImageState extends State<PickImage> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 100,
-          backgroundColor: Colors.indigo[200],
-          title: Column(
-            children: [
-              const SizedBox(
-                height: 5,
-              ),
+          toolbarHeight: 70,
+          backgroundColor: Colors.deepPurple[100],
+          title:
               const Center(
                 child: Text('Chartlytics',
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Alata')),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text("Hello " + userName + " ",
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Alata',
-                            fontSize: 20)),
-                    Icon(Icons.waving_hand_rounded, color: Colors.black54),
-                  ],
-                ),
-              )
-            ],
+                        fontFamily: 'Alata'))
           ),
         ),
         body: SafeArea(
@@ -104,6 +82,27 @@ class PickImageState extends State<PickImage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+               Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Hello ",
+                          style: TextStyle(
+                            color: Colors.black54,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Alata',
+                              fontSize: 35)),
+                      Text( userName + " ",
+                          style:  TextStyle(
+                            color: Colors.deepPurple[300],
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Alata',
+                              fontSize: 35)),
+                      const Icon(Icons.waving_hand_rounded, color: Colors.black54),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   image != null
                       ? Container(
                       height: 200,
@@ -123,7 +122,7 @@ class PickImageState extends State<PickImage> {
                       : Image.asset('assets/images/unnamed.png',
                       width: 200, height: 200),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   SizedBox(
                     height: 50, //height of button
@@ -149,7 +148,7 @@ class PickImageState extends State<PickImage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   SizedBox(
                     height: 40, //height of button
@@ -206,6 +205,8 @@ class PickImageState extends State<PickImage> {
             ),
           ),
         ),
+
+        ///////////////******** Navigation Bar *********////////////////
         bottomNavigationBar: SizedBox(
           height: 70,
           child: BottomNavigationBar(
@@ -226,7 +227,7 @@ class PickImageState extends State<PickImage> {
                 ));
               }
             },
-            backgroundColor: Colors.indigo[200],
+            backgroundColor: Colors.deepPurple[100],
             showSelectedLabels: false,
             showUnselectedLabels: false,
             items: const <BottomNavigationBarItem>[
@@ -257,7 +258,7 @@ class PickImageState extends State<PickImage> {
           content: Text(details),
           actions: [
             TextButton(
-                onPressed: () => Navigator.pop(context), child: Text('OK'))
+                onPressed: () => Navigator.pop(context), child: const Text('OK'))
           ],
         ));
   }
@@ -267,13 +268,13 @@ class PickImageState extends State<PickImage> {
         context: context,
         barrierColor: Colors.white.withOpacity(0),
         builder: (context) {
-          Future.delayed(Duration(milliseconds: 1000), () {
+          Future.delayed(const Duration(milliseconds: 1000), () {
             Navigator.of(context).pop(true);
           });
           return AlertDialog(
             backgroundColor: Colors.grey[100],
             elevation: 0,
-            title: Text('No Image Chosen',
+            title: const Text('No Image Chosen',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.black54, fontSize: 20, fontFamily: 'Alata')),

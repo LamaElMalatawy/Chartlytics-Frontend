@@ -26,7 +26,7 @@ class loadingState  extends State<loadingPage>
     try
     {
       response = await http.post(
-          Uri.parse("http://10.0.2.2:5000/DataExtract"),
+          Uri.parse("http://10.0.2.2:5000/ExtractData"),
           body: jsonEncode({
             'URL': PickImageState.imageUrl,
             'type': ClassificationState.chartIdx,
@@ -67,7 +67,7 @@ class loadingState  extends State<loadingPage>
                       width: 500,
                       height: 450,
                       child: Lottie.network('https://assets3.lottiefiles.com/packages/lf20_n2cwrc3i.json')),
-                  const Text("Generating your Chart Summary", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Alata'),),
+                  const Text("Generating your Chart Summary", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'Alata'),),
                 ]
             ))
 

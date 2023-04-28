@@ -51,7 +51,7 @@ class _LogInState extends State<LogIn> {
     {
       if (e.code == "user-not-found")
       {
-        showErrorMessage("User Doesn't Exist", "There is no user record corresponding to this identifier. The user may have been deleted.");
+        showErrorMessage("User Doesn't Exist", "Thgere is no user record corresponding to this identifier. The user may have been deleted.");
       }
       else {
         showErrorMessage("Something is Wrong", e.code);
@@ -81,8 +81,9 @@ class _LogInState extends State<LogIn> {
               children:  [
                 const SizedBox(height: 40,),
                 //logo
-                const Icon(
+                 Icon(
                   Icons.bar_chart_outlined,
+                  color: Colors.deepPurple[400],
                   size: 100,
                 ),
                 const SizedBox(
@@ -120,9 +121,9 @@ class _LogInState extends State<LogIn> {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children:[
+                    children:const [
                       Text('Forgot Password?',
-                          style: TextStyle(color: Colors.grey[600],fontFamily: 'Alata'))
+                          style: TextStyle(color: Colors.deepPurple,fontFamily: 'Alata'))
                     ],
                   ),
                 ),
@@ -196,7 +197,7 @@ class _LogInState extends State<LogIn> {
                       const Text(
                         'Register Now',
                         style: TextStyle(
-                          color: Colors.indigo,
+                          color: Colors.deepPurple,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
