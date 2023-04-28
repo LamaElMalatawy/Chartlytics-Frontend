@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pick_image/screens/user_profile.dart';
 import 'loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,11 +31,13 @@ class summarystate extends State<summaryPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async => false,
+    child: Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
+        toolbarHeight: 70,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.indigo[200],
+        backgroundColor: Colors.deepPurple[100],
         title: const
         Center(
             child: Text('Chartlytics',
@@ -49,16 +52,16 @@ class summarystate extends State<summaryPage> {
           child: SingleChildScrollView(
             child: Column(
                 children: [
-                  const SizedBox(height:10,),
+                  // const SizedBox(height:10,),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.indigo[50],
-                        border: Border.all(color: Colors.black26, width: 3)
+                        color: Colors.deepPurple[50],
+                        border: Border.all(color: Colors.black45, width: 3)
                         ,borderRadius: BorderRadius.circular(12)),
                     alignment: Alignment.center,
                     width: 250,
                     height: 55,
-                    child: const Text("Generated Summary", style: TextStyle(color: Colors.black, fontSize: 23, fontFamily: 'Alata'),),
+                    child: const Text("Generated Summary", style: TextStyle(color: Colors.black, fontSize: 23, fontFamily: 'Alata',fontWeight: FontWeight.bold),),
                   ),
                   const SizedBox(height:15,),
                   Padding(
@@ -69,6 +72,47 @@ class summarystate extends State<summaryPage> {
           ),
         ),
       ),
+      ///////////////******** Navigation Bar *********////////////////
+      bottomNavigationBar: SizedBox(
+        height: 70,
+        child: BottomNavigationBar(
+          onTap: (value) {
+            if (value == 0) {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const PickImage(),
+              ));
+            }
+            if (value == 1) {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const userPage(),
+              ));
+            }
+            if (value == 2) {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const loadingPage(),
+              ));
+            }
+          },
+          backgroundColor: Colors.deepPurple[100],
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, size: 40, color: Colors.black54),
+              label: "home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, size: 40, color: Colors.black54),
+              label: "user",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info, size: 40, color: Colors.black54),
+              label: "settings",
+            ),
+          ],
+        ),
+      ),
+            ),
     );
   }
 }

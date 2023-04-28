@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pick_image/screens/login.dart';
 import 'package:pick_image/screens/sign_up.dart';
-
+import 'package:pick_image/components/change_theme_button.dart';
 
 class Index extends StatefulWidget {
   const Index({Key? key}) : super(key: key);
@@ -12,18 +12,25 @@ class Index extends StatefulWidget {
 }
 
 class _IndexState extends State<Index> {
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child:  Scaffold(
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 70,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: const [
+            ChangeThemeButtonWidget(),
+          ],
+        ),
         body: Center(
           child: Column(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 100,
+                height: 30,
               ),
               SizedBox(
                   width: 500,
@@ -32,11 +39,15 @@ class _IndexState extends State<Index> {
                       'https://assets5.lottiefiles.com/packages/lf20_dews3j6m.json')),
               const Text(
                 "Chartlytics",
-                style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold,fontFamily: 'Alata'),
+                style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Alata'),
               ),
               const Text(
                 "Charts Data Extraction and Analysis",
-                style: TextStyle(fontSize: 15,fontFamily: 'Alata',color: Colors.grey),
+                style: TextStyle(
+                    fontSize: 15, fontFamily: 'Alata', color: Colors.grey),
               ),
               const SizedBox(
                 height: 40,
@@ -44,33 +55,41 @@ class _IndexState extends State<Index> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const LogIn(),
-                      ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const LogIn(),
+                  ));
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.indigo[200],
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: Colors.deepPurple[200],
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   fixedSize: Size.fromWidth(150),
                   // Background color
                 ),
-                child: const Text('Existing User',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,fontFamily: 'Alata' )),
+                child: const Text('Existing User',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Alata')),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SignUp(),
-                      ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SignUp(),
+                  ));
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.indigo[200],
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  fixedSize: Size.fromWidth(150),// Background color
+                  backgroundColor: Colors.deepPurple[200],
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  fixedSize: Size.fromWidth(150), // Background color
                 ),
-                child: const Text('New User',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,fontFamily: 'Alata' )),
+                child: const Text('New User',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Alata')),
               )
             ],
           ),
@@ -80,4 +99,3 @@ class _IndexState extends State<Index> {
     );
   }
 }
-
