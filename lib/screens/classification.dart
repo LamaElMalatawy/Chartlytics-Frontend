@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:pick_image/screens/user_profile.dart';
 import 'pick_image.dart';
 import 'loading.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class Classification extends StatefulWidget {
   const Classification({super.key});
@@ -13,18 +14,33 @@ class Classification extends StatefulWidget {
 }
 
 class ClassificationState extends State<Classification> {
+
+  final FlutterTts flutterTts = FlutterTts();
+  final TextEditingController textControl = TextEditingController();
+
+  Speak(String text) async {
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setVolume(1);
+    await flutterTts.setPitch(1.2);
+    await flutterTts.setSpeechRate(0.4);
+    await flutterTts.speak(text);
+
+  }
   @override
   void initState() {
     super.initState();
     uploadImage();
   }
-
   static int chartIdx = -1;
-  final loadingPage load = new loadingPage();
-  String chartType = "";
+  static String chartType = "";
   //String url = r"http://10.0.2.2:4000/?img=";
   var response;
   Future uploadImage() async {
+
+
+    setState(() {
+
+    });
     try {
       print(PickImageState.imageUrl);
       response = await http.post(Uri.parse("http://10.0.2.2:5000/Classify"),
@@ -34,7 +50,7 @@ class ClassificationState extends State<Classification> {
 
       chartType = response.body;
 
-      if (chartType == 'Pie') {
+      if (chartType == 'Pie Chart') {
         chartIdx = 0;
       } else if (chartType == 'Vertical Bar Chart') {
         chartIdx = 1;
@@ -45,9 +61,10 @@ class ClassificationState extends State<Classification> {
       print(e);
     }
 
+    Speak("Classifying Your Chart Image. Your chart image is a " + chartType);
+
     setState(() {});
   }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -59,7 +76,7 @@ class ClassificationState extends State<Classification> {
         title: const Center(
           child: Text(
             'Chartlytics',
-            style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.black54,fontSize: 45, fontWeight: FontWeight.bold,fontFamily: 'Alata'),
           ),
         ),
       ),
@@ -81,6 +98,7 @@ class ClassificationState extends State<Classification> {
                   fontSize: 25,
                   fontFamily: 'Alata'),
             ),
+
             const SizedBox(
               height: 30,
             ),
@@ -100,6 +118,7 @@ class ClassificationState extends State<Classification> {
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Alata'),
             ),
+
             const SizedBox(
               height: 25,
             ),
