@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'summary_generation.dart';
 import 'package:lottie/lottie.dart';
 import 'classification.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class loadingPage extends StatefulWidget {
   const loadingPage({super.key});
@@ -14,12 +15,24 @@ class loadingPage extends StatefulWidget {
 
 class loadingState  extends State<loadingPage>
 {
+  final FlutterTts flutterTts = FlutterTts();
+  final TextEditingController textControl = TextEditingController();
+
+  Speak(String text) async {
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setVolume(1);
+    await flutterTts.setPitch(1.2);
+    await flutterTts.setSpeechRate(0.4);
+    await flutterTts.speak(text);
+
+  }
   static String summary= "";
   var response;
   @override
   void initState() {
     super.initState();
     extractData();
+    Speak("Generating your Chart Summary.");
   }
 
   extractData() async {

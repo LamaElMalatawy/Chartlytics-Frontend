@@ -3,12 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pick_image/screens/loading.dart';
 import 'classification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'history.dart';
 import 'user_profile.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class PickImage extends StatefulWidget {
   const PickImage({super.key});
@@ -27,11 +25,26 @@ class PickImageState extends State<PickImage> {
   static String? email;
   Map<String, dynamic> map = {};
 
+  final FlutterTts flutterTts = FlutterTts();
+  final TextEditingController textControl = TextEditingController();
+
+  Speak(String text) async {
+    await flutterTts.setLanguage("en-US");
+    print(flutterTts.getVoices.toString());
+    await flutterTts.setPitch(1.0);
+    await flutterTts.setSpeechRate(0.4);
+    await flutterTts.speak(text);
+  }
   @override
   void initState() {
     email = FirebaseAuth.instance.currentUser?.email.toString();
     super.initState();
     retrieve();
+    setState(() {
+
+    });
+    String text = "Welcome to Chartlytics";
+    Speak(text);
   }
 
   Future getImage() async {
@@ -53,7 +66,7 @@ class PickImageState extends State<PickImage> {
         .get();
     map = await doc.data() as Map<String, dynamic>;
     print(map.keys);
-    userName = map["first name"];
+    userName = map["first name"].toString();
     lastName = map["last name"];
     setState(() {});
     print('retrieval done.');
@@ -222,9 +235,9 @@ class PickImageState extends State<PickImage> {
                 ));
               }
               if (value == 2) {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const loadingPage(),
-                ));
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (context) => const textSpeech(),
+                // ));
               }
             },
             backgroundColor: Colors.deepPurple[100],
