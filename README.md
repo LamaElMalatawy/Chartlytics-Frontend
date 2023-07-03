@@ -16,8 +16,10 @@ Chart images are commonly used for data visualization. Automatically reading the
 </ol>
 
 <h2> Chartlytics Dataset </h2> 
-<a href="https://drive.google.com/drive/folders/1WewWAXXtW-fipTEfz9z9Lg6noEjf1ACd">Line Plots dataset</a>
-<a href="https://drive.google.com/file/d/1q0xICah53D-U-uzb3qRnUMnQBdEdude9/view">Legend dataset</a>
+<ul>
+<li><a href="https://drive.google.com/drive/folders/1WewWAXXtW-fipTEfz9z9Lg6noEjf1ACd">Line Plots dataset</a>
+<li><a href="https://drive.google.com/file/d/1q0xICah53D-U-uzb3qRnUMnQBdEdude9/view">Legend dataset</a>
+</ul>
 
 ## Acknowledgment
 
