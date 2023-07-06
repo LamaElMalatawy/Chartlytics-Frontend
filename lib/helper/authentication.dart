@@ -1,33 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'pick_image.dart';
-import 'index.dart';
+import '../screens/pick_image_page.dart';
+import '../screens/index_page.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({super.key});
+class AuthenticationPage extends StatefulWidget {
+  const AuthenticationPage({super.key});
 
   @override
-  State<AuthPage> createState() => authState();
+  State<AuthenticationPage> createState() => AuthenticationPageState();
 }
-class authState extends State<AuthPage> {
+class AuthenticationPageState extends State<AuthenticationPage> {
   @override
   void initState() {
     super.initState();
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if(user == null)
       {
-        print("User is signed Out");
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Index(),));
-        // Navigator.pop(context);
 
       }
       else
       {
-        print("User is signed In");
-        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PickImage(),));
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PickImage(),));
-
 
       }
     });

@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'pick_image.dart';
+import 'pick_image_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'summary_generation.dart';
+import 'summary_generation_page.dart';
 import 'package:lottie/lottie.dart';
-import 'classification.dart';
+import 'classification_page.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class loadingPage extends StatefulWidget {
@@ -18,7 +18,7 @@ class loadingState  extends State<loadingPage>
   final FlutterTts flutterTts = FlutterTts();
   final TextEditingController textControl = TextEditingController();
 
-  Speak(String text) async {
+  speak(String text) async {
     await flutterTts.setLanguage("en-US");
     await flutterTts.setVolume(1);
     await flutterTts.setPitch(1.2);
@@ -31,8 +31,9 @@ class loadingState  extends State<loadingPage>
   @override
   void initState() {
     super.initState();
+    flutterTts.stop();
     extractData();
-    Speak("Generating your Chart Summary.");
+    speak("Generating your Chart Summary.");
   }
 
   extractData() async {
@@ -44,10 +45,10 @@ class loadingState  extends State<loadingPage>
             'URL': PickImageState.imageUrl,
             'type': ClassificationState.chartIdx,
           }));
-      print(response.body);
+      //print(response.body);
     }
     catch(e){
-      print(e);
+      //print(e);
     }
 
     summary = await response.body as String;
@@ -62,7 +63,9 @@ class loadingState  extends State<loadingPage>
     else
     {
       Navigator.pop(context);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const summaryPage()),);        // Navigator.pop(context);
+      Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => SummaryPage(summary))
+        ,);        // Navigator.pop(context);
       setState(() {});
     }
   }

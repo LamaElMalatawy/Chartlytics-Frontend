@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pick_image/components/custom_textfield.dart';
 import 'package:pick_image/components/custom_button.dart';
 import 'package:pick_image/components/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pick_image/screens/sign_up.dart';
+import 'package:pick_image/helper/auth_service.dart';
+import 'package:pick_image/screens/register_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'pick_image.dart';
+import 'pick_image_page.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -17,19 +20,22 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   Map<String, dynamic> map = {};
   String userName = "";
+  final FlutterTts flutterTts = FlutterTts();
+
   // text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   void retrieve() async
   {
     DocumentSnapshot doc = await FirebaseFirestore.instance.collection('userImages').doc(PickImageState.email).get();
-    map = await doc.data() as Map<String, dynamic>;
-    print(map.keys);
+    map = doc.data() as Map<String, dynamic>;
+
     userName = map["first name"];
     setState(() {});
-    print('retrieval done.');
+
   }
-  Future SignUserIn() async{
+
+  Future userLogin() async{
     try{
       if (!EmailValidator.validate(emailController.text))
       {
@@ -51,13 +57,16 @@ class _LogInState extends State<LogIn> {
     {
       if (e.code == "user-not-found")
       {
-        showErrorMessage("User Doesn't Exist", "Thgere is no user record corresponding to this identifier. The user may have been deleted.");
+        showErrorMessage("User Doesn't Exist",
+            "There is no user record corresponding to this identifier. "
+                "The user may have been deleted.");
       }
       else {
         showErrorMessage("Something is Wrong", e.code);
       }
     }
   }
+
   void showErrorMessage(String message,String details){
     showDialog(
         context: context,
@@ -65,7 +74,7 @@ class _LogInState extends State<LogIn> {
           title: Text(message),
           content: Text(details),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: Text('OK'))
+            TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK'))
           ],
         )
     );
@@ -129,9 +138,8 @@ class _LogInState extends State<LogIn> {
                 ),
                 const SizedBox(height: 15,),
                 // sign in button
-                // sign in button
                 CustomButtonWidget(
-                  onTap: SignUserIn,
+                  onTap: userLogin,
                   label: 'Sign In',
                 ),
                 const SizedBox(height: 20,),
@@ -155,9 +163,10 @@ class _LogInState extends State<LogIn> {
                           ),
                         ),
                       ),
-                      Expanded(child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.grey[400],
                       ),),
                     ],
                   ),
@@ -167,13 +176,23 @@ class _LogInState extends State<LogIn> {
                 // google & facebook sign in
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    SquareTileWidget(imgPath: 'assets/images/google.png'),
-                    SizedBox(width: 5,),
-                    SquareTileWidget(imgPath: 'assets/images/facebook.png'),
+                  children: [
+                    SquareTileWidget(
+                        imgPath: 'assets/images/google.png',
+                    onTap: ()=> AuthService().signInWithGoogle()
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    SquareTileWidget(
+                        imgPath: 'assets/images/facebook.png',
+                    onTap: ()=> AuthService().signInWithGoogle(),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
 
                 // not a member? register now
                 Row(
@@ -190,7 +209,7 @@ class _LogInState extends State<LogIn> {
                         Navigator.pop(context);
                         Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const SignUp(),
+                              builder: (context) => const RegisterPage(),
                             ));
                       },
                       child:

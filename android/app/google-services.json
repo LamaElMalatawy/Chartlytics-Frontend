@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "162292952427",
+    "firebase_url": "https://chartlytics-image-picker-default-rtdb.firebaseio.com",
+    "project_id": "chartlytics-image-picker",
+    "storage_bucket": "chartlytics-image-picker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162292952427:android:bc2f4d6ad6670cfa24302e",
+        "android_client_info": {
+          "package_name": "com.example.chartlytics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162292952427-35u29jfiq4lmufu7s0m46odmjv20mkej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzgPUr7awzxh4w9jV-4vioA_BITtNhYgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162292952427-35u29jfiq4lmufu7s0m46odmjv20mkej.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "162292952427-8g6uhll7l0dhnbtcs0r2b6h15ca7esfk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pickImage"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162292952427:android:50dd854de93eb50924302e",
+        "android_client_info": {
+          "package_name": "com.example.pick_image"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162292952427-35u29jfiq4lmufu7s0m46odmjv20mkej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzgPUr7awzxh4w9jV-4vioA_BITtNhYgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162292952427-35u29jfiq4lmufu7s0m46odmjv20mkej.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "162292952427-8g6uhll7l0dhnbtcs0r2b6h15ca7esfk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pickImage"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

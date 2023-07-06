@@ -32,6 +32,13 @@ dependencies:
   text_to_speech: ^0.2.3
   flutter_tts: ^3.6.3
 
+  # Google Sign in
+  google_sign_in: ^6.1.4
+
+  # Google Icon
+  font_awesome_flutter: any
+
+
 
 dev_dependencies:
   flutter_test:

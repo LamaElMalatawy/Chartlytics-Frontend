@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'loading.dart';
+import 'package:pick_image/screens/information_page.dart';
+import 'loading_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'pick_image.dart';
-import 'history.dart';
+import 'pick_image_page.dart';
+import 'history_page.dart';
 
-class userPage extends StatefulWidget {
-  const userPage({super.key});
+class UserPage extends StatefulWidget {
+  const UserPage({super.key});
   @override
-  State<userPage> createState() => userPageState();
+  State<UserPage> createState() => UserPageState();
 }
 
-class userPageState extends State<userPage> {
+class UserPageState extends State<UserPage> {
   @override
-  void initState() {}
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,8 @@ class userPageState extends State<userPage> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 70,
           automaticallyImplyLeading: false,
+          toolbarHeight: 70,
           backgroundColor: Colors.deepPurple[100],
           title: const
           Center(
@@ -103,7 +106,7 @@ class userPageState extends State<userPage> {
                     child: ElevatedButton(
                         onPressed: () => {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const history(),
+                            builder: (context) => const History(),
                           ))
                         },
                         style: ElevatedButton.styleFrom(
@@ -155,12 +158,12 @@ class userPageState extends State<userPage> {
             }
             if (value == 1) {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const userPage(),
+                builder: (context) => const UserPage(),
               ));
             }
             if (value == 2) {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const loadingPage(),
+                builder: (context) => const AboutChartlytics(),
               ));
             }
           },
@@ -170,15 +173,15 @@ class userPageState extends State<userPage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home, size: 40, color: Colors.black54),
-              label: "home",
+              label: "Home",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 40, color: Colors.black54),
-              label: "user",
+              label: "User",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.info, size: 40, color: Colors.black54),
-              label: "settings",
+              label: "About",
             ),
           ],
         ),

@@ -3,21 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:pick_image/components/custom_textfield.dart';
 import 'package:pick_image/components/custom_button.dart';
 import 'package:pick_image/components/square_tile.dart';
-import 'package:pick_image/screens/login.dart';
+import 'package:pick_image/helper/auth_service.dart';
+import 'package:pick_image/screens/login_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class SignUp extends StatefulWidget {
-  //final Function()? onTap;
-  const SignUp({
+class RegisterPage extends StatefulWidget {
+
+
+  const RegisterPage({
     super.key,
     //required this.onTap,
   });
   @override
-  _SignUpState createState() => _SignUpState();
+  _registerPageState createState() => _registerPageState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _registerPageState extends State<RegisterPage> {
 
   // text editing controllers
   final firstNameController = TextEditingController();
@@ -36,7 +38,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Future SignUserUp() async {
+  Future register() async {
     try{
       if (!EmailValidator.validate(emailController.text))
       {
@@ -60,8 +62,9 @@ class _SignUpState extends State<SignUp> {
               password: passwordController.text.trim()
           );
         }
-        else
+        else {
           showErrorMessage("Passwords Don't Match", "Please make sure to confirm you password.");
+        }
       }
     }
     on FirebaseAuthException catch(e)
@@ -70,8 +73,9 @@ class _SignUpState extends State<SignUp> {
       {
         showErrorMessage("Email address is already in use by another account", "Please enter another Email.");
       }
-      else
+      else {
         showErrorMessage("Something is Wrong", e.code);
+      }
     }
     save();
 
@@ -83,7 +87,7 @@ class _SignUpState extends State<SignUp> {
           title: Text(message),
           content: Text(details),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: Text('OK'))
+            TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK'))
           ],
         )
     );
@@ -156,7 +160,7 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 15,),
                 // sign in button
                 CustomButtonWidget(
-                  onTap: SignUserUp,
+                  onTap: register,
                   label: 'Sign Up',
                 ),
                 const SizedBox(height: 20,),
@@ -192,10 +196,14 @@ class _SignUpState extends State<SignUp> {
                 // google & facebook sign up
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    SquareTileWidget(imgPath: 'assets/images/google.png'),
-                    SizedBox(width: 25,),
-                    SquareTileWidget(imgPath: 'assets/images/facebook.png'),
+                  children: [
+                    SquareTileWidget(
+                        imgPath: 'assets/images/google.png',
+                    onTap: ()=> AuthService().registerWithGoogle(),),
+                    const SizedBox(width: 25,),
+                    SquareTileWidget(
+                        imgPath: 'assets/images/facebook.png',
+                    onTap: ()=> AuthService().registerWithGoogle(),),
                   ],
                 ),
                 const SizedBox(height: 15,),

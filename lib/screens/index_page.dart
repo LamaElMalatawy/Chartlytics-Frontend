@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pick_image/screens/login.dart';
-import 'package:pick_image/screens/sign_up.dart';
+import 'package:pick_image/screens/login_page.dart';
+import 'package:pick_image/screens/register_page.dart';
 import 'package:pick_image/components/change_theme_button.dart';
 
 class Index extends StatefulWidget {
@@ -18,6 +18,7 @@ class _IndexState extends State<Index> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           toolbarHeight: 70,
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -76,7 +77,7 @@ class _IndexState extends State<Index> {
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const SignUp(),
+                    builder: (context) => const RegisterPage(),
                   ));
                 },
                 style: ElevatedButton.styleFrom(

@@ -3,9 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'classification.dart';
+import 'package:pick_image/screens/information_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'user_profile.dart';
+import 'package:pick_image/screens/classification_page.dart';
+import 'user_profile_page.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class PickImage extends StatefulWidget {
@@ -28,9 +29,8 @@ class PickImageState extends State<PickImage> {
   final FlutterTts flutterTts = FlutterTts();
   final TextEditingController textControl = TextEditingController();
 
-  Speak(String text) async {
+  speak(String text) async {
     await flutterTts.setLanguage("en-US");
-    print(flutterTts.getVoices.toString());
     await flutterTts.setPitch(1.0);
     await flutterTts.setSpeechRate(0.4);
     await flutterTts.speak(text);
@@ -43,8 +43,10 @@ class PickImageState extends State<PickImage> {
     setState(() {
 
     });
+
+    flutterTts.stop();
     String text = "Welcome to Chartlytics";
-    Speak(text);
+    speak(text);
   }
 
   Future getImage() async {
@@ -64,12 +66,11 @@ class PickImageState extends State<PickImage> {
         .collection('userImages')
         .doc(PickImageState.email)
         .get();
-    map = await doc.data() as Map<String, dynamic>;
-    print(map.keys);
+    map = doc.data() as Map<String, dynamic>;
     userName = map["first name"].toString();
     lastName = map["last name"];
     setState(() {});
-    print('retrieval done.');
+
   }
 
   @override
@@ -78,6 +79,7 @@ class PickImageState extends State<PickImage> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           toolbarHeight: 70,
           backgroundColor: Colors.deepPurple[100],
           title:
@@ -104,7 +106,7 @@ class PickImageState extends State<PickImage> {
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Alata',
                               fontSize: 35)),
-                      Text( userName + " ",
+                      Text( "$userName ",
                           style:  TextStyle(
                             color: Colors.deepPurple[300],
                               fontWeight: FontWeight.bold,
@@ -164,7 +166,7 @@ class PickImageState extends State<PickImage> {
                     height: 15,
                   ),
                   SizedBox(
-                    height: 40, //height of button
+                    height: 40, // height of button
                     width: 85,
                     child: ElevatedButton(
                       onPressed: () async {
@@ -231,13 +233,13 @@ class PickImageState extends State<PickImage> {
               }
               if (value == 1) {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const userPage(),
+                  builder: (context) => const UserPage(),
                 ));
               }
               if (value == 2) {
-                // Navigator.of(context).push(MaterialPageRoute(
-                //   builder: (context) => const textSpeech(),
-                // ));
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const AboutChartlytics(),
+                ));
               }
             },
             backgroundColor: Colors.deepPurple[100],
@@ -246,15 +248,15 @@ class PickImageState extends State<PickImage> {
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home, size: 40, color: Colors.black54),
-                label: "home",
+                label: "Home",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person, size: 40, color: Colors.black54),
-                label: "user",
+                label: "User",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.info, size: 40, color: Colors.black54),
-                label: "settings",
+                label: "About",
               ),
             ],
           ),

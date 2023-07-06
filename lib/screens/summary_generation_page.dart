@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pick_image/screens/user_profile.dart';
-import 'loading.dart';
+import 'package:pick_image/screens/information_page.dart';
+import 'package:pick_image/screens/user_profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'pick_image.dart';
+import 'pick_image_page.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-class summaryPage extends StatefulWidget{
-  const summaryPage({super.key});
+class SummaryPage extends StatefulWidget{
+
+  String summary = "";
+
+  SummaryPage(this.summary, {super.key});
   @override
-  State<summaryPage> createState() => summarystate();
+  State<SummaryPage> createState() => SummaryPageState();
 }
-class summarystate extends State<summaryPage> {
+class SummaryPageState extends State<SummaryPage> {
   final FlutterTts flutterTts = FlutterTts();
   final TextEditingController textControl = TextEditingController();
 
-  Speak(String text) async {
+  speak(String text) async {
     await flutterTts.setLanguage("en-US");
     await flutterTts.setVolume(1);
     await flutterTts.setPitch(1.1);
@@ -24,8 +27,10 @@ class summarystate extends State<summaryPage> {
   }
   @override
   void initState() {
+    super.initState();
     save();
-    Speak(loadingState.summary);
+    flutterTts.stop();
+    speak(widget.summary);
   }
   void save() async
   {
@@ -35,7 +40,7 @@ class summarystate extends State<summaryPage> {
       final email = user.email;
       await FirebaseFirestore.instance.collection('userImages').doc(email).update(
           {
-            PickImageState.fileID.toString(): loadingState.summary.toString(),
+            PickImageState.fileID.toString(): widget.summary.toString(),
           }
       );
     }
@@ -46,8 +51,8 @@ class summarystate extends State<summaryPage> {
         onWillPop: () async => false,
     child: Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70,
         automaticallyImplyLeading: false,
+        toolbarHeight: 70,
         backgroundColor: Colors.deepPurple[100],
         title: const
         Center(
@@ -76,16 +81,16 @@ class summarystate extends State<summaryPage> {
                   ),
                   const SizedBox(height:13,),
                   Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Text(loadingState.summary ,textAlign: TextAlign.center, style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, fontFamily: 'Alata'))
+                      padding: const EdgeInsets.all(5),
+                      child: Text(widget.summary ,textAlign: TextAlign.center, style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, fontFamily: 'Alata'))
                   ),
                   SizedBox(
                       height: 45, //height of button
                       width: 190,
                       child:ElevatedButton(
                               onPressed: () {
-                                Speak(loadingState.summary);
-                                Clipboard.setData(ClipboardData(text:loadingState.summary));
+                                speak(widget.summary);
+                                Clipboard.setData(ClipboardData(text:widget.summary));
                                 },
                         style: ElevatedButton.styleFrom(
                             side: const BorderSide(
@@ -110,7 +115,7 @@ class summarystate extends State<summaryPage> {
                     width: 150,
                     child:ElevatedButton(
                       onPressed: () {
-                        Clipboard.setData(ClipboardData(text: loadingState.summary));
+                        Clipboard.setData(ClipboardData(text: widget.summary));
                         _showNoImgDialog(context);
                       },
                       style: ElevatedButton.styleFrom(
@@ -146,12 +151,12 @@ class summarystate extends State<summaryPage> {
             }
             if (value == 1) {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const userPage(),
+                builder: (context) => const UserPage(),
               ));
             }
             if (value == 2) {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const loadingPage(),
+                builder: (context) => const AboutChartlytics(),
               ));
             }
           },
@@ -161,15 +166,15 @@ class summarystate extends State<summaryPage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home, size: 40, color: Colors.black54),
-              label: "home",
+              label: "Home",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 40, color: Colors.black54),
-              label: "user",
+              label: "User",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.info, size: 40, color: Colors.black54),
-              label: "settings",
+              label: "About",
             ),
           ],
         ),
