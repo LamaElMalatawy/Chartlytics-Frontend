@@ -1,9 +1,6 @@
-# chartlytics
+# chartlytics 
 
-Our Graduation Project
-
-<h2> Introduction </h2>
-Chart images are commonly used for data visualization. Automatically reading the chart values is a key step for chart content understanding. Charts have a lot of variations in style (e.g. bar chart, line chart, pie chart and etc.), which makes pure rule-based data extraction methods difficult to handle. Analysis of these data can bring us huge benefits, including scientific document processing and reading experience enhancement for visually impaired people. However, it is well-known that inferring key insights from charts can be quite challenging and time-consuming.
+Chart images play a vital role in visualizing data, but automatically extracting the values from these charts poses a significant challenge. The diverse range of chart styles makes it difficult to employ pure rule-based data extraction methods effectively. Developing a system that generates textual descriptions of images would improve the accessibility of digital content for individuals with visual impairments. <br><br> To address this issue, we developed Chartlytics, a user-friendly, accessible application that can create textual descriptions for given a chart image and display them for the user in the form of a plain understandable text or a sound that people with complete loss of vision can easily hear.
 
 <h2> Objectives </h2>
 <ol>
