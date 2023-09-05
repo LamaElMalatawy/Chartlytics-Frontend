@@ -32,7 +32,7 @@ class loadingState  extends State<loadingPage>
   void initState() {
     super.initState();
     extractData();
-    Speak("Generating your Chart Summary.");
+    // Speak("Generating your Chart Summary.");
   }
 
   extractData() async {

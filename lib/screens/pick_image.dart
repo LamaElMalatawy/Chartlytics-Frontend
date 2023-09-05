@@ -44,7 +44,7 @@ class PickImageState extends State<PickImage> {
 
     });
     String text = "Welcome to Chartlytics";
-    Speak(text);
+    // Speak(text);
   }
 
   Future getImage() async {

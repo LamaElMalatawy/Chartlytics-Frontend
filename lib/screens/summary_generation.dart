@@ -25,7 +25,7 @@ class summarystate extends State<summaryPage> {
   @override
   void initState() {
     save();
-    Speak(loadingState.summary);
+    // Speak(loadingState.summary);
   }
   void save() async
   {

@@ -36,10 +36,7 @@ class ClassificationState extends State<Classification> {
   //String url = r"http://10.0.2.2:4000/?img=";
   var response;
   Future uploadImage() async {
-
-
     setState(() {
-
     });
     try {
       print(PickImageState.imageUrl);
@@ -56,12 +53,19 @@ class ClassificationState extends State<Classification> {
         chartIdx = 1;
       } else if (chartType == 'Horizontal Bar Chart') {
         chartIdx = 2;
+      } else if (chartType == 'Line Plot') {
+        chartIdx = 3;
+      }
+      else {
+        showErrorMessage("Sorry :( This Class is not supported yet!",
+            "Summary generation for this chart type is not supported on our app.");
+        setState(() {});
       }
     } catch (e) {
       print(e);
     }
 
-    Speak("Classifying Your Chart Image. Your chart image is a " + chartType);
+    //Speak("Classifying Your Chart Image. Your chart image is a " + chartType);
 
     setState(() {});
   }
@@ -188,5 +192,31 @@ class ClassificationState extends State<Classification> {
       ),
             ),
     );
+  }
+  void showErrorMessage(String message, String details) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(message,
+            style: const TextStyle(
+              color: Colors.black87,
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Alata'),),
+          content: Text(details,
+            style: const TextStyle(
+                color: Colors.black87,
+                fontSize: 15,
+                fontFamily: 'Alata'),),
+          actions: [
+            TextButton(
+                onPressed: ()
+               {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'))
+          ],
+        ));
   }
 }
