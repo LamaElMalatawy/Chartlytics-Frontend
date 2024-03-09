@@ -1,4 +1,5 @@
 # Chartlytics-Frontend
+
 An application for the visually impaired that solves the problem of screen readers where they are unable to read the chart content from chart images, by generating a chart description for the input chart image uploaded on the application.<br>
 <li>Link for <a href = "https://github.com/LamaElMalatawy/Chartlytics-Backend"> Chartlytics-Backend </a> repo.
 
